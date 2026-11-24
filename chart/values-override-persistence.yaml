@@ -1,0 +1,52 @@
+
+# Airflow executor
+executor: "KubernetesExecutor"
+
+
+#Images
+images:
+  airflow:
+    repository: my-dags
+    tag: ~
+    # Specifying digest takes precedence over tag.
+    digest: ~
+    pullPolicy: IfNotPresent
+
+#GitSync
+dags:
+  gitSync:
+    enabled: true
+
+    # Git repo clone url
+    repo: https://github.com/ohraband/databricks-airflow3.0-template.git
+    # SSH example: git@github.com:apache/airflow.git
+    # HTTPS example: https://github.com/apache/airflow.git
+
+    branch: main
+    rev: HEAD
+
+    # The git revision (branch, tag, or hash) to check out, v4 only
+    ref: main
+
+    depth: 1
+
+    # The number of consecutive failures allowed before aborting
+    maxFailures: 0
+
+    # Subpath within the repo where dags are located.
+    # Should be "" if dags are at repo root
+    subPath: "dags"
+    credentialsSecret: git-credentials
+
+
+# Persistence
+logs:
+
+  persistence:
+    # Enable persistent volume for storing logs
+    enabled: True
+
+    size: 5Gi
+
+    # If using a custom storageClass, pass name here
+    storageClassName: manual

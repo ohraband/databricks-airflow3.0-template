@@ -15,11 +15,14 @@ export NAMESPACE=airflow
 export RELEASE_NAME=airflow
 
 #Build the image and load it into kind
-docker build --pull --tag $IMAGE_NAME:$IMAGE_TAG -f cicd/Dockerfile .
+docker build --no-cache --pull --tag $IMAGE_NAME:$IMAGE_TAG -f cicd/Dockerfile .
 kind load docker-image $IMAGE_NAME:$IMAGE_TAG 
 
 #Create a namespace
 kubectl create namespace $NAMESPACE
+
+# Apply kubernetes secrets
+kubectl apply -f k8s/secrets/git-secrets.yaml --namespace $NAMESPACE
 
 # Install Airflow using helm
 helm install $RELEASE_NAME apache-airflow/airflow \
