@@ -34,6 +34,11 @@ def example_dag():
         time.sleep(5)
         print("Hello world, from Airflow!")
 
+    @task
+    def goobye_worls():
+        time.sleep(5)
+        print("Goodbye world, from Airflow!")
+
     hello_world()
 
 
