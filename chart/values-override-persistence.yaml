@@ -7,7 +7,7 @@ executor: "KubernetesExecutor"
 images:
   airflow:
     repository: my-dags
-    tag: ~
+    #tag: ~
     # Specifying digest takes precedence over tag.
     digest: ~
     pullPolicy: IfNotPresent
