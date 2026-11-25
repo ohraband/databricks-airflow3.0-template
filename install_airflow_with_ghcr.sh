@@ -27,7 +27,7 @@ kubectl create secret docker-registry ghcr-secret \
 kubectl apply -f k8s/secrets/git-secrets.yaml --namespace $NAMESPACE
 
 kubectl apply -f k8s/volumes/airflow-logs-pv.yaml
-kubectl apply -f k8s/volumes/airflow-logs-pvc.yaml
+kubectl apply -f k8s/volumes/airflow-logs-pvc.yaml #may get claimed again and cause pods to be stuck at pending, try: kubectl describe pod -l component=api-server -n airflow
 
 # Install Airflow using helm
 helm install $RELEASE_NAME apache-airflow/airflow \
